@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo -u wordpress -i -- wp-cli $@ --path="/var/www/html"
