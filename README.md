@@ -1,17 +1,27 @@
 # wordpress
 
-## How to use this image
+## Install with docker-compose
+The easiest way to install these containers is with a docker-compose.yml file. The compose file will download and start two containers. The first container will start a customized version of the Official Wordpress container. The second is an Official MariaDB container.
 
-### via docker-compose
-The easiest way to install these containers is with a docker-compose.yml file. 
+The customized Wordpress container has the following added features.
+* https enabled using a self-signed certificate
+* [wp-cli](http://wp-cli.org/)
+  * A script (__wp__) that will run __wp-cli__, while logged in as root
 
+Docker-compose will mount the following directories where the command is run.
+* database = MariaDB data files
+* html = Web root
+* log = Log files for Apache
 
+### How to run docker-compose
 ```
 mkdir wordpress
 cd wordpress
-curl 
+curl -O https://raw.githubusercontent.com/tlezotte/wordpress/master/docker-compose.yml
+** change passwords in docker-compose.yml file **
 docker-compose up -d
 ```
+wait for it to initialize completely, and visit [https://localhost:8443](https://localhost:8443).
 
 #### Example File
 ```
@@ -38,31 +48,5 @@ services:
       - ./database:/var/lib/mysql
 ```
 
-### via docker
-```
-$ docker run --name some-wordpress --link some-mysql:mysql -d wordpress
-```
-The following environment variables are also honored for configuring your WordPress instance:
-
-* -e WORDPRESS_DB_HOST=... (defaults to the IP and port of the linked mysql container)
-* -e WORDPRESS_DB_USER=... (defaults to "root")
-* -e WORDPRESS_DB_PASSWORD=... (defaults to the value of the MYSQL_ROOT_PASSWORD environment variable from the linked mysql container)
-* -e WORDPRESS_DB_NAME=... (defaults to "wordpress")
-* -e WORDPRESS_TABLE_PREFIX=... (defaults to "", only set this when you need to override the default table prefix in wp-config.php)
-* -e WORDPRESS_AUTH_KEY=..., -e WORDPRESS_SECURE_AUTH_KEY=..., -e WORDPRESS_LOGGED_IN_KEY=..., -e WORDPRESS_NONCE_KEY=..., -e WORDPRESS_AUTH_SALT=..., -e WORDPRESS_SECURE_AUTH_SALT=..., -e WORDPRESS_LOGGED_IN_SALT=..., -e WORDPRESS_NONCE_SALT=... (default to unique random SHA1s)
-
-If the __WORDPRESS_DB_NAME__ specified does not already exist on the given MySQL server, it will be created automatically upon startup of the wordpress container, provided that the __WORDPRESS_DB_USER__ specified has the necessary permissions to create it.
-
-If you'd like to be able to access the instance from the host without the container's IP, standard port mappings can be used:
-
-```
-$ docker run --name some-wordpress --link some-mysql:mysql -p 8443:443 -d wordpress
-```
-Then, access it via https://localhost:8443 or https://host-ip:8443 in a browser.
-
-If you'd like to use an external database instead of a linked mysql container, specify the hostname and port with __WORDPRESS_DB_HOST__ along with the password in __WORDPRESS_DB_PASSWORD__ and the username in __WORDPRESS_DB_USER__ (if it is something other than root):
-
-```
-$ docker run --name some-wordpress -e WORDPRESS_DB_HOST=10.1.2.3:3306 \
-    -e WORDPRESS_DB_USER=... -e WORDPRESS_DB_PASSWORD=... -d wordpress
-```
+### NOTE: 
+Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__. They need to be the same.

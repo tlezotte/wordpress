@@ -29,6 +29,7 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 RUN a2enmod rewrite expires ssl
+# enable ssl website
 RUN a2ensite default-ssl
 
 VOLUME /var/www/html
@@ -44,15 +45,19 @@ RUN set -ex; \
 	rm wordpress.tar.gz; \
 	chown -R www-data:www-data /usr/src/wordpress
 
+# create user for wp-cli
 RUN useradd -G www-data -m wordpress
 
+# install wp-cli
 RUN curl -L https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/local/bin/wp-cli; \
     chmod 755 /usr/local/bin/wp-cli
 
-RUN openssl req -subj '/CN=localhost/O=VUMC/OU=VICTR/C=US/S=Tennessee/L=Nashville' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.crt; \
+# generate self-signed certificate
+RUN openssl req -subj '/CN=localhost/O=VUMC/OU=VUMC/C=US/S=Tennessee/L=Nashville' -new -newkey rsa:2048 -sha256 -days 365 -nodes -x509 -keyout /etc/ssl/private/ssl-cert-snakeoil.key -out /etc/ssl/certs/ssl-cert-snakeoil.crt; \
     openssl x509 -in /etc/ssl/certs/ssl-cert-snakeoil.crt -out /etc/ssl/certs/ssl-cert-snakeoil.pem -outform PEM
 
 COPY docker-entrypoint.sh /usr/local/bin/
+# copy wp script to container
 COPY wp /usr/local/bin/
 
 ENTRYPOINT ["docker-entrypoint.sh"]
