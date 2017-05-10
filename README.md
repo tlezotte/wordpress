@@ -18,10 +18,12 @@ Docker-compose will mount the following directories where the command is run.
 mkdir wordpress
 cd wordpress
 curl -O https://raw.githubusercontent.com/tlezotte/wordpress/master/docker-compose.yml
-** change passwords in docker-compose.yml file **
+** read note below **
 docker-compose up -d
 ```
 wait for it to initialize completely, and visit [https://localhost:8443](https://localhost:8443).
+
+__NOTE:__ Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__ before running `docker-compose up -d`. The passwords need to be the same.
 
 #### Example File
 ```
@@ -30,15 +32,14 @@ version: '2'
 services:
 
   wordpress:
-    image: tlezotte/ubuntu-wordpress
+    image: tlezotte/wordpress
     ports:
-      - 8080:80
       - 8443:443
     environment:
       WORDPRESS_DB_PASSWORD: Q2n0exmL
     volumes:
       - ./html:/var/www/html
-      - ./log:/var/log/apache2/
+      - ./html_log:/var/log/apache2/
 
   mysql:
     image: mariadb
@@ -46,7 +47,5 @@ services:
       MYSQL_ROOT_PASSWORD: Q2n0exmL
     volumes: 
       - ./database:/var/lib/mysql
+      - ./database_log:/var/log/mysql
 ```
-
-### NOTE: 
-Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__. They need to be the same.

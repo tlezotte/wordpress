@@ -3,15 +3,14 @@ version: '2'
 services:
 
   wordpress:
-    image: tlezotte/ubuntu-wordpress
+    image: tlezotte/wordpress
     ports:
-      - 8080:80
       - 8443:443
     environment:
       WORDPRESS_DB_PASSWORD: Q2n0exmL
     volumes:
       - ./html:/var/www/html
-      - ./log:/var/log/apache2/
+      - ./html_log:/var/log/apache2/
 
   mysql:
     image: mariadb
@@ -19,3 +18,4 @@ services:
       MYSQL_ROOT_PASSWORD: Q2n0exmL
     volumes: 
       - ./database:/var/lib/mysql
+      - ./database_log:/var/log/mysql
