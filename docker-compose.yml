@@ -11,7 +11,7 @@ services:
     volumes:
       - ./html:/var/www/html
       - ./credentials:/app001/credentials
-      - ./html_log:/var/log/apache2
+      - ./logs/http:/var/log/apache2
 
   mysql:
     image: mariadb
@@ -19,4 +19,4 @@ services:
       MYSQL_ROOT_PASSWORD: Q2n0exmL
     volumes: 
       - ./database:/var/lib/mysql
-      - ./database_log:/var/log/mysql
+      - ./logs/database:/var/log/mysql
