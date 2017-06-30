@@ -169,10 +169,14 @@ EOPHP
 		fi
 
 		# Modify WordPress to fit new approach (create a default website)
-		mkdir -p myapp/core
-		mv wp-content/ myapp/
-		mv wp-config.php myapp/
-		mv wp-* index.php license.txt readme.html xmlrpc.php myapp/core/
+		# if [ ! -e myapp ]; then
+		# 	mkdir -p myapp/core
+		# 	mv wp-content/ myapp/
+		# 	mv wp-config.php /app001/credentials/myapp-wp-config.php
+		# 	mv wp-* index.php license.txt readme.html xmlrpc.php myapp/core/
+
+		# 	sed -i -e "s|\(.*'ABSPATH'.*\)'/'\(.*\)|\1'/core/'\2|g" /app001/credentials/myapp-wp-config.php
+		# fi
 
 		TERM=dumb php -- <<'EOPHP'
 <?php
