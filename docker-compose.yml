@@ -10,7 +10,8 @@ services:
       WORDPRESS_DB_PASSWORD: Q2n0exmL
     volumes:
       - ./html:/var/www/html
-      - ./html_log:/var/log/apache2/
+      - ./credentials:/app001/credentials
+      - ./html_log:/var/log/apache2
 
   mysql:
     image: mariadb

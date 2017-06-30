@@ -49,6 +49,12 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 			EOF
 			chown www-data:www-data .htaccess
 		fi
+
+		# Modify WordPress to fit new approach
+		mkdir -p myapp/core
+		mv wp-content/ myapp/
+		mv wp-config.php myapp/
+		mv wp-* index.php license.txt readme.html xmlrpc.php myapp/core/
 	fi
 
 	# TODO handle WordPress upgrades magically in the same way, but only if wp-includes/version.php's $wp_version is less than /usr/src/wordpress/wp-includes/version.php's $wp_version
