@@ -8,23 +8,23 @@ The customized Wordpress container has the following added features.
 * [wp-cli](http://wp-cli.org/)
   * A script (__wp__) that will run __wp-cli__, while logged in as root
 
-Docker-compose will mount the following directories where the command is run.
+Docker compose will mount the following directories where the command is run.
 * database = MariaDB data files
 * html = Web root
 * database_log = Log files for MariaDB
 * html_log = Log files for Apache
 
-### How to run docker-compose
+### How to run docker compose
 ```
 mkdir wordpress
 cd wordpress
 curl -O https://raw.githubusercontent.com/tlezotte/wordpress/master/docker-compose.yml
 ** read note below **
-docker-compose up -d
+docker compose up -d
 ```
 wait for it to initialize completely, and visit [https://localhost:8443](https://localhost:8443).
 
-__NOTE:__ Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__ before running `docker-compose up -d`. The passwords need to be the same.
+__NOTE:__ Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__ before running `docker compose up -d`. The passwords need to be the same.
 
 ### How to connect to container
 #### list running containers
