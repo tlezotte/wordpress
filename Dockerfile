@@ -1,4 +1,4 @@
-FROM php:apache
+FROM php:5.6-apache
 
 # install the PHP extensions we need
 RUN set -ex; \
@@ -34,8 +34,8 @@ RUN a2ensite default-ssl
 
 VOLUME /var/www/html
 
-ENV WORDPRESS_VERSION 5.7.1
-ENV WORDPRESS_SHA1 296bc228c4f4d67d7da8814079f86516f6c2337d
+ENV WORDPRESS_VERSION 4.7.4
+ENV WORDPRESS_SHA1 153592ccbb838cafa1220de9174ec965df2e9e1a
 
 RUN set -ex; \
 	curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-${WORDPRESS_VERSION}.tar.gz"; \

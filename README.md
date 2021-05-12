@@ -20,11 +20,11 @@ mkdir wordpress
 cd wordpress
 curl -O https://raw.githubusercontent.com/tlezotte/wordpress/master/docker-compose.yml
 ** read note below **
-docker compose up -d
+docker-compose up -d
 ```
 wait for it to initialize completely, and visit [https://localhost:8443](https://localhost:8443).
 
-__NOTE:__ Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__ before running `docker compose up -d`. The passwords need to be the same.
+__NOTE:__ Change the passwords for __WORDPRESS_DB_PASSWORD__ and __MYSQL_ROOT_PASSWORD__ before running `docker-compose up -d`. The passwords need to be the same.
 
 ### How to connect to container
 #### list running containers
